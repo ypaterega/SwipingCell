@@ -10,4 +10,3 @@ protocol ConfigurableCell {
     associatedtype CellModel
     func updateCell(model: CellModel)
 }
-
