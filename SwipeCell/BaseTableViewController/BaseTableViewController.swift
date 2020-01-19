@@ -17,7 +17,6 @@ class BaseTableViewControler: UIViewController {
     private(set) var cells = [CellConfigurator]() {
         didSet {
             tableViewDataSource.items = cells
-            tableViewDelegate.items = cells
             tableView.reloadData()
         }
     }
@@ -34,6 +33,7 @@ class BaseTableViewControler: UIViewController {
     private func setupView() {
         tableView.delegate = tableViewDelegate
         tableView.dataSource = tableViewDataSource
+        tableViewDelegate.source = tableViewDataSource
         
         tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension

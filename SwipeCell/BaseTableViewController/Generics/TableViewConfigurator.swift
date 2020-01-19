@@ -8,9 +8,14 @@
 
 import UIKit
 
+enum SwipeActionsSide {
+    case leading, trailing
+}
+
 protocol CellConfigurator {
     static var reuseId: String { get }
     func configureCell(cell: UIView)
+    func swipeConfig(for side: SwipeActionsSide) -> UISwipeActionsConfiguration?
 }
 
 class TableViewConfigurator<CellType: ConfigurableCell, CellModel>: CellConfigurator where CellType.CellModel == CellModel, CellType: UITableViewCell {
@@ -27,10 +32,18 @@ class TableViewConfigurator<CellType: ConfigurableCell, CellModel>: CellConfigur
             cell.updateCell(model: cellModel)
         }
     }
+    
+    func swipeConfig(for side: SwipeActionsSide) -> UISwipeActionsConfiguration? {
+        guard let model = cellModel as? SwipableCellModel else { return nil }
+        switch side {
+        case .leading: return model.leadingActions.map { .init(actions: $0) }
+        case .trailing: return model.trailingActions.map { .init(actions: $0) }
+        }
+    }
 }
 
 extension TableViewConfigurator {
-    func conformProtocol<T>(_ protocol: T.Type) -> CellModel?  {
+    func conformProtocol<T>(_ protocol: T.Type) -> CellModel? {
         if CellType.self is T {
             return cellModel
         }

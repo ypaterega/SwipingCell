@@ -23,10 +23,12 @@ class TableViewController: BaseTableViewControler {
         
         var cells = [CellConfigurator]()
         
-        for _ in 0...3 {
+        for i in 0...3 {
+            
             var cellModel = SubClassSwipableCell.ViewModel()
             cellModel.labelText = "random"
-            cellModel.swipingActions = createLeadingSwipingAction()
+            cellModel.leadingActions = (0..<i).map { action(style: .normal, title: "L-\($0)") }
+            cellModel.trailingActions = (0..<i).map { action(style: .destructive, title: "T-\($0)") }
             
             let cellConfigurator = SubClassSwipableCellConfigurator(model: cellModel)
     
@@ -36,18 +38,11 @@ class TableViewController: BaseTableViewControler {
         addCells(cells)
     }
     
-    private func createLeadingSwipingAction() -> [UIContextualAction] {
-        
-        var actions = [UIContextualAction]()
-        
-        let action_1 = UIContextualAction(style: .normal, title: "this is swipe", handler: { (action, view, completionHandler) in
-            print("some")
-            completionHandler(true)
-        })
-                
-        actions.append(action_1)
-        
-        return actions
+    private func action(style: UIContextualAction.Style, title: String) -> UIContextualAction {
+        UIContextualAction(style: style, title: title) { (action, view, handler) in
+            print("action with view: \(view) of cell: \(title)")
+            handler(true)
+        }
     }
     
 }

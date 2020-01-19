@@ -8,10 +8,7 @@
 
 import UIKit
 
-class SubClassSwipableCell: UITableViewCell, SwipableCellProtocol {
-    
-    var leadingAction =  [UIContextualAction]()
-    var trailingAction = [UIContextualAction]()
+class SubClassSwipableCell: UITableViewCell {
     
     private let someLabel = UILabel()
     
@@ -37,17 +34,15 @@ class SubClassSwipableCell: UITableViewCell, SwipableCellProtocol {
 }
 
 extension SubClassSwipableCell {
-    struct ViewModel {
+    struct ViewModel: SwipableCellModel {
         var labelText = ""
-        var swipingActions: [UIContextualAction]?
+        var leadingActions: [UIContextualAction]?
+        var trailingActions: [UIContextualAction]?
     }
 }
 
 extension SubClassSwipableCell: ConfigurableCell {    
     func updateCell(model: ViewModel) {
         someLabel.text = model.labelText
-        
-        leadingAction = model.swipingActions!
-        trailingAction = model.swipingActions!
     }
 }

@@ -9,20 +9,15 @@
 import UIKit
 
 class BaseTableViewDelegate: NSObject, UITableViewDelegate {
-    var items = [CellConfigurator]()
+    
+    weak var source: BaseTableViewDataSource?
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let item = items[indexPath.row]
-        
-        //TODO
-        
-        if let cell = item as? TableViewConfigurator<SubClassSwipableCell, SubClassSwipableCell.ViewModel>, let cellModel = cell.conformProtocol(SwipableCellProtocol.self) {
-            if let swipingActions = cellModel.swipingActions {
-                let configuration = UISwipeActionsConfiguration(actions: swipingActions)
-                return configuration
-            }
-        }
-        
-        return nil
+        return source?.items[indexPath.row].swipeConfig(for: .leading)
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return source?.items[indexPath.row].swipeConfig(for: .trailing)
+    }
+
 }
