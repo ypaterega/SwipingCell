@@ -30,8 +30,8 @@ class TableViewConfigurator<CellType: ConfigurableCell, CellModel>: CellConfigur
 }
 
 extension TableViewConfigurator {
-    func conformSwipableProtocol() -> CellModel?  {
-        if CellType.self is SwipableCellProtocol {
+    func conformProtocol<T>(_ protocol: T.Type) -> CellModel?  {
+        if CellType.self is T {
             return cellModel
         }
         
