@@ -29,4 +29,14 @@ class TableViewConfigurator<CellType: ConfigurableCell, CellModel>: CellConfigur
     }
 }
 
+extension TableViewConfigurator {
+    func conformSwipableProtocol() -> CellModel?  {
+        if CellType.self is SwipableCellProtocol {
+            return cellModel
+        }
+        
+        return nil
+    }
+}
+
 typealias SubClassSwipableCellConfigurator = TableViewConfigurator<SubClassSwipableCell, SubClassSwipableCell.ViewModel>

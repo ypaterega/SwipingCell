@@ -16,8 +16,7 @@ class BaseTableViewDelegate: NSObject, UITableViewDelegate {
         
         //TODO
         
-        if let cell = item as? TableViewConfigurator<SubClassSwipableCell, SubClassSwipableCell.ViewModel> {
-            let cellModel = cell.cellModel
+        if let cell = item as? TableViewConfigurator<SubClassSwipableCell, SubClassSwipableCell.ViewModel>, let cellModel = cell.conformSwipableProtocol() {
             if let swipingActions = cellModel.swipingActions {
                 let configuration = UISwipeActionsConfiguration(actions: swipingActions)
                 return configuration

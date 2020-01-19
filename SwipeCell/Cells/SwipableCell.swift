@@ -8,6 +8,8 @@
 
 import UIKit
 
-class SwipableCell: UITableViewCell {
-    
+@objc protocol SwipableCellProtocol {
+    var leadingAction: [UIContextualAction] {get set}
+    var trailingAction: [UIContextualAction] {get set}
 }
+
